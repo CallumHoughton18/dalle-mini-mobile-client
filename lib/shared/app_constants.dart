@@ -1,0 +1,4 @@
+enum AppPage {
+  home,
+  pastImages,
+}
