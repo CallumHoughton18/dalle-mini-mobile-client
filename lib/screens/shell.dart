@@ -1,4 +1,5 @@
 import 'package:dalle_mobile_client/repositories/saved_images_files_repository.dart';
+import 'package:dalle_mobile_client/repositories/saved_screenshots_files_repository.dart';
 import 'package:dalle_mobile_client/screens/generate_images_screen/generate_images_screen.dart';
 import 'package:dalle_mobile_client/screens/previous_generations_screen/previous_generations_screen.dart';
 import 'package:dalle_mobile_client/services/dalle_mock_api.dart';
@@ -19,11 +20,13 @@ class _ShellState extends State<Shell> {
     GeneratedImagesScreen(
       key: const PageStorageKey<AppPage>(AppPage.home),
       dalleApi: DalleMockApi(),
+      screenshotsRepository: SavedScreenshotsFilesRepository(),
       imagesRepository: SavedImagesFilesRepository(),
     ),
     PreviousGenerationsScreen(
       key: const PageStorageKey<AppPage>(AppPage.pastImages),
       imagesRepository: SavedImagesFilesRepository(),
+      screenshotsRepository: SavedScreenshotsFilesRepository(),
     )
   ];
   AppPage currentPage = AppPage.home;
