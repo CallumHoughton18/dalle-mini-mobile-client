@@ -21,6 +21,7 @@ class DalleImageGrid extends StatelessWidget {
         itemCount: photos.length,
         itemBuilder: (context, index) {
           return GestureDetector(
+            key: Key("dallegriditem-$index"),
             onTap: () async {
               await showDialog(
                   context: context,

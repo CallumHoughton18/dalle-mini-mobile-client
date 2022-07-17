@@ -3,6 +3,7 @@ import 'package:dalle_mobile_client/repositories/saved_screenshots_files_reposit
 import 'package:dalle_mobile_client/screens/generate_images_screen/generate_images_screen.dart';
 import 'package:dalle_mobile_client/screens/previous_generations_screen/previous_generations_screen.dart';
 import 'package:dalle_mobile_client/services/dalle_mock_api.dart';
+import 'package:dalle_mobile_client/services/dalle_web_api.dart';
 import 'package:dalle_mobile_client/services/share_plus_share_service.dart';
 import 'package:dalle_mobile_client/shared/app_constants.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,7 @@ class _ShellState extends State<Shell> {
   final List<Widget> pages = <Widget>[
     GeneratedImagesScreen(
       key: const PageStorageKey<AppPage>(AppPage.home),
-      dalleApi: DalleMockApi(),
+      dalleApi: DalleWebApi(),
       shareService: SharePlusShareService(),
       screenshotsRepository: SavedScreenshotsFilesRepository(),
       imagesRepository: SavedImagesFilesRepository(),

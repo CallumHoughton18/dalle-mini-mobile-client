@@ -17,16 +17,21 @@ mixin ScreenshotableWidget<T extends StatefulWidget> on State<T> {
   ShareService get shareService;
 
   Future<void> shareScreenshot() async {
-    RenderRepaintBoundary boundary = boundarykey.currentContext!
-        .findRenderObject()! as RenderRepaintBoundary;
+    // needs to be a slight delay between clicking a button
+    // and a screenshot of the page being taken
+    // https://github.com/flutter/flutter/issues/22308
+    return Future.delayed(const Duration(milliseconds: 20), () async {
+      RenderRepaintBoundary boundary = boundarykey.currentContext!
+          .findRenderObject()! as RenderRepaintBoundary;
 
-    var image = await boundary.toImage();
-    ByteData? byteData = await image.toByteData(format: ImageByteFormat.png);
-    Uint8List pngBytes = byteData!.buffer.asUint8List();
+      var image = await boundary.toImage();
+      ByteData? byteData = await image.toByteData(format: ImageByteFormat.png);
+      Uint8List pngBytes = byteData!.buffer.asUint8List();
 
-    var screenshotFilePath =
-        await screenshotRepository.saveScreenshotData(pngBytes);
+      var screenshotFilePath =
+          await screenshotRepository.saveScreenshotData(pngBytes);
 
-    await shareService.shareFile(screenshotFilePath!);
+      await shareService.shareFile(screenshotFilePath!);
+    });
   }
 }
