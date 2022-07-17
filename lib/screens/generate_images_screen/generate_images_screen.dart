@@ -6,6 +6,7 @@ import 'package:dalle_mobile_client/models/dalle_response.dart';
 import 'package:dalle_mobile_client/repositories/interfaces/saved_images_repository.dart';
 import 'package:dalle_mobile_client/repositories/interfaces/saved_screenshots_repository.dart';
 import 'package:dalle_mobile_client/screens/generate_images_screen/widgets/dalle_future_image_grid_builder.dart';
+import 'package:dalle_mobile_client/services/interfaces/share_service.dart';
 import 'package:dalle_mobile_client/shared/mixins/screenshotable_widget.dart';
 import "package:flutter/material.dart";
 import 'package:flutter/rendering.dart';
@@ -16,10 +17,12 @@ class GeneratedImagesScreen extends StatefulWidget {
   final DalleApi dalleApi;
   final SavedImagesRepository imagesRepository;
   final SavedScreenshotsRepository screenshotsRepository;
+  final ShareService shareService;
   const GeneratedImagesScreen(
       {Key? key,
       required this.dalleApi,
       required this.imagesRepository,
+      required this.shareService,
       required this.screenshotsRepository})
       : super(key: key);
 
@@ -40,6 +43,10 @@ class _GeneratedImagesScreenState extends State<GeneratedImagesScreen>
   @override
   SavedScreenshotsRepository get screenshotRepository =>
       widget.screenshotsRepository;
+
+  @override
+  // TODO: implement shareService
+  ShareService get shareService => widget.shareService;
 
   final _formKey = GlobalKey<FormState>();
   final _repaintKey = GlobalKey();
@@ -115,8 +122,11 @@ class _GeneratedImagesScreenState extends State<GeneratedImagesScreen>
             if (snapshot.hasData && snapshot.data!.isNotEmpty) {
               var data = snapshot.data!;
               children = ElevatedButton(
+                  key: const Key('ShareButton'),
                   onPressed: () async {
+                    setState(() {});
                     await shareScreenshot();
+                    setState(() {});
                   },
                   child: const Text("Share"));
             }
