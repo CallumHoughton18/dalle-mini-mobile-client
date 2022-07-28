@@ -1,6 +1,4 @@
 import 'dart:typed_data';
-import 'dart:ui';
-
 import 'package:dalle_mobile_client/models/dalle_image.dart';
 import 'package:dalle_mobile_client/models/dalle_response.dart';
 import 'package:dalle_mobile_client/repositories/interfaces/saved_images_repository.dart';
@@ -9,9 +7,7 @@ import 'package:dalle_mobile_client/screens/generate_images_screen/widgets/dalle
 import 'package:dalle_mobile_client/services/interfaces/share_service.dart';
 import 'package:dalle_mobile_client/shared/mixins/screenshotable_widget.dart';
 import "package:flutter/material.dart";
-import 'package:flutter/rendering.dart';
 import '../../services/interfaces/dalle_api.dart';
-import 'package:share_plus/share_plus.dart';
 
 class GeneratedImagesScreen extends StatefulWidget {
   final DalleApi dalleApi;
@@ -45,7 +41,6 @@ class _GeneratedImagesScreenState extends State<GeneratedImagesScreen>
       widget.screenshotsRepository;
 
   @override
-  // TODO: implement shareService
   ShareService get shareService => widget.shareService;
 
   final _formKey = GlobalKey<FormState>();
@@ -56,83 +51,104 @@ class _GeneratedImagesScreenState extends State<GeneratedImagesScreen>
 
   @override
   Widget build(BuildContext context) {
-    var scaffold =
-        Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Expanded(
-        child: RepaintBoundary(
-          key: _repaintKey,
-          child: Column(
-            children: [
-              Row(
+    const spacing = 10.0;
+    var scaffold = Padding(
+        padding: const EdgeInsets.all(spacing),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Expanded(
+            child: RepaintBoundary(
+              key: _repaintKey,
+              child: Column(
                 children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Flexible(
+                          child: Form(
+                        key: _formKey,
+                        child: TextFormField(
+                          controller: promptController,
+                          decoration: const InputDecoration(
+                              hintText: "Enter your prompt"),
+                          validator: (text) {
+                            if (text == null || text.isEmpty) {
+                              return "Prompt cannot be empty";
+                            }
+                            return null;
+                          },
+                        ),
+                      )),
+                      const SizedBox(width: spacing),
+                      SizedBox(
+                        height: 49,
+                        child: ElevatedButton(
+                            onPressed: (() {
+                              var isValid = _formKey.currentState!.validate();
+                              if (isValid) {
+                                dallePhotos =
+                                    getPhotosFromDalle(promptController.text);
+                              }
+                              setState(() {});
+                            }),
+                            child: const Icon(Icons.edit)),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: spacing),
                   Flexible(
-                      child: Form(
-                    key: _formKey,
-                    child: TextFormField(
-                      controller: promptController,
-                      decoration:
-                          const InputDecoration(hintText: "Enter your prompt"),
-                      validator: (text) {
-                        if (text == null || text.isEmpty) {
-                          return "Prompt cannot be empty";
-                        }
-                        return null;
-                      },
-                    ),
-                  )),
-                  ElevatedButton(
-                      onPressed: (() {
-                        var isValid = _formKey.currentState!.validate();
-                        if (isValid) {
-                          dallePhotos =
-                              getPhotosFromDalle(promptController.text);
-                        }
-                        setState(() {});
-                      }),
-                      child: const Text("Run"))
+                    child: DalleFutureImageGridBuilder(
+                        context: context, future: dallePhotos),
+                  ),
                 ],
               ),
-              Flexible(
-                child: DalleFutureImageGridBuilder(
-                    context: context, future: dallePhotos),
-              ),
-            ],
+            ),
           ),
-        ),
-      ),
-      FutureBuilder(
-          future: dallePhotos,
-          builder: (context, AsyncSnapshot<List<DalleImage>?> snapshot) {
-            Widget children = const SizedBox.shrink();
-            if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-              var data = snapshot.data!;
-              children = ElevatedButton(
-                  onPressed: () {
-                    widget.imagesRepository
-                        .saveImages(promptController.text, data);
-                  },
-                  child: const Text("Save Images"));
-            }
-            return children;
-          }),
-      FutureBuilder(
-          future: dallePhotos,
-          builder: (context, AsyncSnapshot<List<DalleImage>?> snapshot) {
-            Widget children = const SizedBox.shrink();
-            if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-              var data = snapshot.data!;
-              children = ElevatedButton(
-                  key: const Key('ShareButton'),
-                  onPressed: () async {
-                    setState(() {});
-                    await shareScreenshot();
-                    setState(() {});
-                  },
-                  child: const Text("Share"));
-            }
-            return children;
-          }),
-    ]);
+          Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                FutureBuilder(
+                    future: dallePhotos,
+                    builder:
+                        (context, AsyncSnapshot<List<DalleImage>?> snapshot) {
+                      Widget children = const SizedBox.shrink();
+                      if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                        var data = snapshot.data!;
+                        children = IconButton(
+                          onPressed: () {
+                            widget.imagesRepository
+                                .saveImages(promptController.text, data);
+                          },
+                          icon: const Icon(Icons.save),
+                          // label: const Text("Save"),
+                        );
+                      }
+                      return children;
+                    }),
+                FutureBuilder(
+                    future: dallePhotos,
+                    builder:
+                        (context, AsyncSnapshot<List<DalleImage>?> snapshot) {
+                      Widget children = const SizedBox.shrink();
+                      if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                        var data = snapshot.data!;
+                        children = IconButton(
+                          splashColor: Colors.white,
+                          highlightColor: Colors.black,
+                          hoverColor: Colors.black,
+                          onPressed: () async {
+                            setState(() {});
+                            await shareScreenshot();
+                            setState(() {});
+                          },
+                          icon: const Icon(Icons.share),
+                          // label: const Text("Share"),
+                        );
+                      }
+                      return children;
+                    }),
+              ])
+        ]));
 
     super.build(context);
     return scaffold;
