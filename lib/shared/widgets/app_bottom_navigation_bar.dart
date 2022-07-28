@@ -15,22 +15,26 @@ class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
 
   @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      items: const <BottomNavigationBarItem>[
-        BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          label: 'Home',
-          backgroundColor: Colors.blue,
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.image),
-          label: 'Images',
-          backgroundColor: Colors.blue,
-        ),
-      ],
-      currentIndex: _selectedIndex,
-      selectedItemColor: Colors.blue[800],
-      onTap: _onItemTapped,
+    return Container(
+      decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.tertiary,
+          border: Border(
+              top: BorderSide(
+                  color: Theme.of(context).colorScheme.tertiary, width: 1.5))),
+      child: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.image),
+            label: 'Images',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
+      ),
     );
   }
 

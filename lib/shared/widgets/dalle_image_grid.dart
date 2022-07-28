@@ -27,11 +27,15 @@ class DalleImageGrid extends StatelessWidget {
                   context: context,
                   builder: (_) => ImageDialog(image: photos[index]));
             },
-            child: Container(
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      fit: BoxFit.fitWidth, image: photos[index].image)),
-            ),
+            child: ClipRRect(
+                borderRadius: BorderRadius.circular(5),
+                child: Image(image: photos[index].image)),
+
+            // child: Container(
+            //   decoration: BoxDecoration(
+            //       image: DecorationImage(
+            //           fit: BoxFit.fitWidth, image: photos[index].image)),
+            // ),
           );
         });
   }

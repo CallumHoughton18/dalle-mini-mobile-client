@@ -70,11 +70,13 @@ class SavedImagesFilesRepository implements SavedImagesRepository {
 
   Future<Iterable<io.Directory>> _getSavedImagesDirectories() async {
     var baseDir = await _applicationDirectory;
-    var imagesDirectory =
+    var baseImageDirectory =
         await io.Directory('${baseDir.path}/$rootPhotoDirectoryName/')
-            .list()
-            .toList()
-            .then((value) => value.whereType<Directory>());
+            .create(recursive: true);
+    var imagesDirectory = await baseImageDirectory
+        .list()
+        .toList()
+        .then((value) => value.whereType<Directory>());
     return imagesDirectory;
   }
 }
