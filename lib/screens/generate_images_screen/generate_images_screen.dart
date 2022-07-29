@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:typed_data';
 import 'package:dalle_mobile_client/models/dalle_image.dart';
 import 'package:dalle_mobile_client/models/dalle_response.dart';
@@ -58,48 +59,56 @@ class _GeneratedImagesScreenState extends State<GeneratedImagesScreen>
           Expanded(
             child: RepaintBoundary(
               key: _repaintKey,
-              child: Column(
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Flexible(
-                          child: Form(
-                        key: _formKey,
-                        child: TextFormField(
-                          controller: promptController,
-                          decoration: const InputDecoration(
-                              hintText: "Enter your prompt"),
-                          validator: (text) {
-                            if (text == null || text.isEmpty) {
-                              return "Prompt cannot be empty";
-                            }
-                            return null;
-                          },
-                        ),
-                      )),
-                      const SizedBox(width: spacing),
-                      SizedBox(
-                        height: 49,
-                        child: ElevatedButton(
-                            onPressed: (() {
-                              var isValid = _formKey.currentState!.validate();
-                              if (isValid) {
-                                dallePhotos =
-                                    getPhotosFromDalle(promptController.text);
+              child: Container(
+                color: Theme.of(context).colorScheme.background,
+                child: Column(
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Flexible(
+                            child: Form(
+                          key: _formKey,
+                          child: TextFormField(
+                            controller: promptController,
+                            decoration: const InputDecoration(
+                                hintText: "Enter your prompt"),
+                            validator: (text) {
+                              if (text == null || text.isEmpty) {
+                                return "Prompt cannot be empty";
                               }
-                              setState(() {});
-                            }),
-                            child: const Icon(Icons.edit)),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: spacing),
-                  Flexible(
-                    child: DalleFutureImageGridBuilder(
-                        context: context, future: dallePhotos),
-                  ),
-                ],
+                              return null;
+                            },
+                          ),
+                        )),
+                        const SizedBox(width: spacing),
+                        SizedBox(
+                          height: 49,
+                          child: ElevatedButton(
+                              onPressed: (() {
+                                var isValid = _formKey.currentState!.validate();
+                                if (isValid) {
+                                  dallePhotos =
+                                      getPhotosFromDalle(promptController.text)
+                                          .then((value) {
+                                    widget.imagesRepository.saveImages(
+                                        promptController.text, value);
+                                    return value;
+                                  });
+                                }
+                                setState(() {});
+                              }),
+                              child: const Icon(Icons.edit)),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: spacing),
+                    Flexible(
+                      child: DalleFutureImageGridBuilder(
+                          context: context, future: dallePhotos),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -112,37 +121,17 @@ class _GeneratedImagesScreenState extends State<GeneratedImagesScreen>
                     builder:
                         (context, AsyncSnapshot<List<DalleImage>?> snapshot) {
                       Widget children = const SizedBox.shrink();
-                      if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                      if (snapshot.hasData &&
+                          snapshot.data!.isNotEmpty &&
+                          snapshot.connectionState == ConnectionState.done) {
                         var data = snapshot.data!;
                         children = IconButton(
-                          onPressed: () {
-                            widget.imagesRepository
-                                .saveImages(promptController.text, data);
-                          },
-                          icon: const Icon(Icons.save),
-                          // label: const Text("Save"),
-                        );
-                      }
-                      return children;
-                    }),
-                FutureBuilder(
-                    future: dallePhotos,
-                    builder:
-                        (context, AsyncSnapshot<List<DalleImage>?> snapshot) {
-                      Widget children = const SizedBox.shrink();
-                      if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-                        var data = snapshot.data!;
-                        children = IconButton(
-                          splashColor: Colors.white,
-                          highlightColor: Colors.black,
-                          hoverColor: Colors.black,
                           onPressed: () async {
                             setState(() {});
                             await shareScreenshot();
                             setState(() {});
                           },
                           icon: const Icon(Icons.share),
-                          // label: const Text("Share"),
                         );
                       }
                       return children;

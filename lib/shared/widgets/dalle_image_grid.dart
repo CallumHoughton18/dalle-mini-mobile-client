@@ -30,12 +30,6 @@ class DalleImageGrid extends StatelessWidget {
             child: ClipRRect(
                 borderRadius: BorderRadius.circular(5),
                 child: Image(image: photos[index].image)),
-
-            // child: Container(
-            //   decoration: BoxDecoration(
-            //       image: DecorationImage(
-            //           fit: BoxFit.fitWidth, image: photos[index].image)),
-            // ),
           );
         });
   }

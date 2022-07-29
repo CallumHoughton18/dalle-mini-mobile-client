@@ -41,26 +41,38 @@ class _GenerationDetailsScreenState extends State<GenerationDetailsScreen>
   @override
   Widget build(BuildContext context) {
     var images = widget.promptResult.toImages().toList();
+    const spacing = 10.0;
     return Scaffold(
       appBar: AppBar(title: const Text("Dalle-Mini Client")),
       body: RepaintBoundary(
         key: _repaintKey,
-        child: Column(
-          children: [
-            Text(widget.promptText,
-                textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 20)),
-            Flexible(
-              child: DalleImageGrid(context: context, photos: images),
-              flex: 1,
+        child: Container(
+          color: Theme.of(context).colorScheme.background,
+          child: Padding(
+            padding: const EdgeInsets.all(spacing),
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(bottom: spacing),
+                  child: Text(widget.promptText,
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.headline5),
+                ),
+                Flexible(
+                  child: DalleImageGrid(context: context, photos: images),
+                  flex: 1,
+                ),
+                const SizedBox(height: spacing),
+                IconButton(
+                  key: const Key("ShareButton"),
+                  onPressed: () async {
+                    await shareScreenshot();
+                  },
+                  icon: const Icon(Icons.share),
+                ),
+              ],
             ),
-            ElevatedButton(
-                key: const Key("ShareButton"),
-                onPressed: () async {
-                  await shareScreenshot();
-                },
-                child: const Text("Share Me!")),
-          ],
+          ),
         ),
       ),
     );

@@ -24,12 +24,12 @@ class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
       child: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
+            icon: Icon(Icons.art_track),
+            label: 'Generate Images',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.image),
-            label: 'Images',
+            label: 'Previous Images',
           ),
         ],
         currentIndex: _selectedIndex,

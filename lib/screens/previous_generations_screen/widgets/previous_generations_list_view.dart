@@ -39,23 +39,29 @@ class _PreviousGenerationsListViewState
               },
               child: Card(
                 key: Key("${data[index]}-ListViewItem"),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: SizedBox(height: 65, child: Text(data[index])),
-                    ),
-                    ElevatedButton.icon(
-                      key: Key('${data[index]}-DeleteButton'),
-                      icon: const Icon(Icons.delete),
-                      label: const Text("Delete"),
-                      onPressed: () {
-                        setState(() {
-                          widget.onItemRemoved(data[index]);
-                          data.removeAt(index);
-                        });
-                      },
-                    )
-                  ],
+                child: Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          data[index],
+                          style: Theme.of(context).textTheme.titleLarge,
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      IconButton(
+                        key: Key('${data[index]}-DeleteButton'),
+                        icon: const Icon(Icons.delete),
+                        onPressed: () {
+                          setState(() {
+                            widget.onItemRemoved(data[index]);
+                            data.removeAt(index);
+                          });
+                        },
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),
