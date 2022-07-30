@@ -37,6 +37,7 @@ mixin ScreenshotableWidget<T extends StatefulWidget> on State<T> {
         await shareService.shareFile(screenshotFilePath!);
       } catch (_) {
         generateSnackbar("Error Generating Screenshot...", context);
+        rethrow;
       }
     });
   }

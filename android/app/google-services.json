@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "56265481836",
+    "project_id": "dalle-mini-client",
+    "storage_bucket": "dalle-mini-client.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:56265481836:android:b302c651dd3bab7f440249",
+        "android_client_info": {
+          "package_name": "com.example.dalle_mobile_client"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "56265481836-vsajfk4d587jot1blbns5sqrrr185367.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSVyhLGIOD9W_XicDOzdN6Izjkup-tl9g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "56265481836-vsajfk4d587jot1blbns5sqrrr185367.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "56265481836-bqrqbcf321n46r7tqdaia32vevo0len4.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.dalleMobileClient"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

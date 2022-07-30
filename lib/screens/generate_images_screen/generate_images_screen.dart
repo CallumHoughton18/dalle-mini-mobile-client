@@ -72,6 +72,8 @@ class _GeneratedImagesScreenState extends State<GeneratedImagesScreen>
                             child: Form(
                           key: _formKey,
                           child: TextFormField(
+                            keyboardType: TextInputType.multiline,
+                            maxLines: null,
                             controller: promptController,
                             decoration: const InputDecoration(
                                 hintText: "Enter your prompt"),

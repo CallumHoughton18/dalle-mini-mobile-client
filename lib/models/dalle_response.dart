@@ -10,9 +10,10 @@ class DalleResponse {
 
   factory DalleResponse.fromJson(Map<String, dynamic> json) {
     var imagesBase64 = <String>[];
-    var images = json["images"] as List<String>;
+    var images = json["images"] as List<dynamic>;
     for (var image in images) {
-      imagesBase64.add(image);
+      var base64 = image as String;
+      imagesBase64.add(base64);
     }
     return DalleResponse(imagesAsBase64: imagesBase64);
   }
