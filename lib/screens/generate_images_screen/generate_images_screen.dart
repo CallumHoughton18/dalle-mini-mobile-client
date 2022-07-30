@@ -6,7 +6,9 @@ import 'package:dalle_mobile_client/repositories/interfaces/saved_images_reposit
 import 'package:dalle_mobile_client/repositories/interfaces/saved_screenshots_repository.dart';
 import 'package:dalle_mobile_client/screens/generate_images_screen/widgets/dalle_future_image_grid_builder.dart';
 import 'package:dalle_mobile_client/services/interfaces/share_service.dart';
+import 'package:dalle_mobile_client/shared/exceptions/dalle_app_exception.dart';
 import 'package:dalle_mobile_client/shared/mixins/screenshotable_widget.dart';
+import 'package:dalle_mobile_client/shared/widgets/generate_snackbar.dart';
 import "package:flutter/material.dart";
 import '../../services/interfaces/dalle_api.dart';
 
@@ -88,13 +90,7 @@ class _GeneratedImagesScreenState extends State<GeneratedImagesScreen>
                               onPressed: (() {
                                 var isValid = _formKey.currentState!.validate();
                                 if (isValid) {
-                                  dallePhotos =
-                                      getPhotosFromDalle(promptController.text)
-                                          .then((value) {
-                                    widget.imagesRepository.saveImages(
-                                        promptController.text, value);
-                                    return value;
-                                  });
+                                  _getAndSaveDallePhotos(context);
                                 }
                                 setState(() {});
                               }),
@@ -143,7 +139,17 @@ class _GeneratedImagesScreenState extends State<GeneratedImagesScreen>
     return scaffold;
   }
 
-  Future<List<DalleImage>> getPhotosFromDalle(String rootImageName) async {
+  void _getAndSaveDallePhotos(BuildContext context) {
+    dallePhotos = _getPhotosFromDalle(promptController.text).then((value) {
+      widget.imagesRepository.saveImages(promptController.text, value);
+      return value;
+    }).catchError((error) {
+      var appException = error as DalleAppException;
+      generateSnackbar(appException.friendlyMessage, context);
+    }, test: (error) => error is DalleAppException);
+  }
+
+  Future<List<DalleImage>> _getPhotosFromDalle(String rootImageName) async {
     var imageNum = 0;
     final List<Uint8List> imageData = await widget.dalleApi
         .generateImagesFromPrompt(promptController.text)
