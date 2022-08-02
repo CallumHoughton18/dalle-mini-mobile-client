@@ -3,6 +3,7 @@ import 'package:dalle_mobile_client/repositories/interfaces/saved_screenshots_re
 import 'package:dalle_mobile_client/services/interfaces/share_service.dart';
 import 'package:dalle_mobile_client/shared/mixins/screenshotable_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:screenshot/screenshot.dart';
 
 import '../../shared/widgets/dalle_image_grid.dart';
 
@@ -27,10 +28,7 @@ class GenerationDetailsScreen extends StatefulWidget {
 
 class _GenerationDetailsScreenState extends State<GenerationDetailsScreen>
     with ScreenshotableWidget {
-  final GlobalKey _repaintKey = GlobalKey();
-
-  @override
-  GlobalKey<State<StatefulWidget>> get boundarykey => _repaintKey;
+  final _screenshotController = ScreenshotController();
 
   @override
   SavedScreenshotsRepository get screenshotRepository => widget.repository;
@@ -39,13 +37,16 @@ class _GenerationDetailsScreenState extends State<GenerationDetailsScreen>
   ShareService get shareService => widget.shareService;
 
   @override
+  ScreenshotController get screenshotController => _screenshotController;
+
+  @override
   Widget build(BuildContext context) {
     var images = widget.promptResult.toImages().toList();
     const spacing = 10.0;
     return Scaffold(
       appBar: AppBar(title: const Text("Dalle-Mini Client")),
-      body: RepaintBoundary(
-        key: _repaintKey,
+      body: Screenshot(
+        controller: screenshotController,
         child: Container(
           color: Theme.of(context).colorScheme.background,
           child: Padding(

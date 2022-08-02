@@ -50,6 +50,7 @@ void main() {
     setUp(() {
       mockDalleApi = MockDalleApi();
       mockSavedImagesRepository = MockSavedImagesRepository();
+      mockSavedScreenshotsRepository = MockSavedScreenshotsRepository();
       when(mockDalleApi.generateImagesFromPrompt(text)).thenAnswer((_) async {
         var imagesAsBase64 = <String>[];
         for (var i = 0; i < 9; i++) {
@@ -61,6 +62,10 @@ void main() {
       when(mockSavedScreenshotsRepository.saveScreenshotData(any))
           .thenAnswer((_) async {
         return "screenshot.jpg";
+      });
+      when(mockSavedImagesRepository.saveImages(any, any))
+          .thenAnswer((_) async {
+        return true;
       });
 
       sut = MaterialApp(
@@ -146,12 +151,44 @@ void main() {
       await tester.runAsync(() async {
         // I don't like this, but otherwise the async callback
         // for the ShareButton isn't 'awaited'
-        await tester.tap(find.byKey(const Key('ShareButton')));
+        await tester.tap(find.byType(IconButton));
         await tester.pumpAndSettle(const Duration(microseconds: 3000));
-        await Future.delayed(Duration(milliseconds: 100));
+        await Future.delayed(const Duration(milliseconds: 500));
       });
 
       verify(mockShareService.shareFile(any)).called(1);
+    });
+
+    testWidgets('Should hide share icon when given a new prompt',
+        (WidgetTester tester) async {
+      final widget = MaterialApp(
+          home: Scaffold(
+        body: GeneratedImagesScreen(
+          dalleApi: mockDalleApi,
+          shareService: mockShareService,
+          imagesRepository: mockSavedImagesRepository,
+          screenshotsRepository: mockSavedScreenshotsRepository,
+        ),
+      ));
+
+      await tester.pumpWidget(widget);
+      await tester.enterText(find.byType(TextFormField), text);
+      await tester.tap(find.byType(ElevatedButton));
+      await tester.pumpWidget(widget);
+      // wait for refresh indicator to stop spinning
+      await tester.pumpAndSettle();
+
+      // The share button should be visible, as the images are generated
+      expect(find.byType(IconButton), findsOneWidget);
+
+      await tester.pumpWidget(widget);
+      await tester.enterText(find.byType(TextFormField), text);
+      await tester.tap(find.byType(ElevatedButton));
+      await tester.pumpWidget(widget);
+
+      // The share button should be hidden, as in this state the loading spinner
+      // will be displayed
+      expect(find.byType(IconButton), findsNothing);
     });
   });
 }

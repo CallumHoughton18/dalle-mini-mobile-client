@@ -42,14 +42,14 @@ void main() {
       await tester.pumpAndSettle();
       // wait for refresh indicator to stop spinning
 
-      final shareButton = find.byKey(const Key("ShareButton"));
+      final shareButton = find.byType(IconButton);
 
       await tester.runAsync(() async {
         // I don't like this, but otherwise the async callback
         // for the ShareButton isn't 'awaited'
         await tester.tap(shareButton);
         await tester.pump();
-        await Future.delayed(const Duration(milliseconds: 100));
+        await Future.delayed(const Duration(milliseconds: 500));
 
         verify(mockShareService!.shareFile(any)).called(1);
       });

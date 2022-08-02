@@ -21,7 +21,7 @@ class _ShellState extends State<Shell> {
   final List<Widget> pages = <Widget>[
     GeneratedImagesScreen(
       key: const PageStorageKey<AppPage>(AppPage.home),
-      dalleApi: DalleWebApi(),
+      dalleApi: DalleMockApi(),
       shareService: SharePlusShareService(),
       screenshotsRepository: SavedScreenshotsFilesRepository(),
       imagesRepository: SavedImagesFilesRepository(),

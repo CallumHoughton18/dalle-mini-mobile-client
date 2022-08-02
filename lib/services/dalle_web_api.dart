@@ -12,6 +12,9 @@ class DalleWebApi implements DalleApi {
   Future<DalleResponse> generateImagesFromPrompt(String prompt) async {
     // Not a big fan of this, seems extremely messy but without adopting
     // a functional library it seems error handling is just messy.
+    // for other errors in the app it's simpler to just let them bubble up
+    // and be caught by a top level error handler, but for HTTP errors
+    // it's more friendly to handle this here
     try {
       var uri = Uri.https(authority, "/generate");
       var response = await http.post(uri,

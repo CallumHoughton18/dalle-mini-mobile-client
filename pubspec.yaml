@@ -39,6 +39,7 @@ dependencies:
   share_plus: ^4.0.10
   firebase_crashlytics: ^2.8.6
   firebase_core: ^1.20.0
+  screenshot: ^1.2.3
 
 
 dev_dependencies:
