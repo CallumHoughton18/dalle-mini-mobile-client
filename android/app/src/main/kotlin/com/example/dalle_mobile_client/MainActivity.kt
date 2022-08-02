@@ -1,4 +1,4 @@
-package com.example.dalle_mobile_client
+package com.callumhoughton18.dalle_mobile_client
 
 import io.flutter.embedding.android.FlutterActivity
 

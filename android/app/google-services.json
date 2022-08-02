@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:56265481836:android:b302c651dd3bab7f440249",
         "android_client_info": {
-          "package_name": "com.example.dalle_mobile_client"
+          "package_name": "com.callumhoughton18.dalle_mobile_client"
         }
       },
       "oauth_client": [
@@ -34,7 +34,7 @@
               "client_id": "56265481836-bqrqbcf321n46r7tqdaia32vevo0len4.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.dalleMobileClient"
+                "bundle_id": "com.callumhoughton18.dalleMobileClient"
               }
             }
           ]

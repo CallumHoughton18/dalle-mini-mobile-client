@@ -10,7 +10,7 @@
 .svn/
 
 # vscode
-.vscode
+.vscode/settings.json
 
 # IntelliJ related
 *.iml

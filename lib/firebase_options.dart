@@ -70,7 +70,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '56265481836',
     projectId: 'dalle-mini-client',
     storageBucket: 'dalle-mini-client.appspot.com',
-    iosClientId: '56265481836-bqrqbcf321n46r7tqdaia32vevo0len4.apps.googleusercontent.com',
-    iosBundleId: 'com.example.dalleMobileClient',
+    iosClientId:
+        '56265481836-bqrqbcf321n46r7tqdaia32vevo0len4.apps.googleusercontent.com',
+    iosBundleId: 'com.callumhoughton18.dalleMobileClient',
   );
 }
