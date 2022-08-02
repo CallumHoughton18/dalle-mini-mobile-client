@@ -8,10 +8,10 @@ class EmptyImageWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      constraints: const BoxConstraints.expand(),
-      decoration: const BoxDecoration(
-          image: DecorationImage(
-              fit: BoxFit.cover, image: AssetImage("assets/empty.jpg"))),
-    );
+        constraints: const BoxConstraints.expand(),
+        child: const Icon(
+          Icons.image_search,
+          size: 50,
+        ));
   }
 }

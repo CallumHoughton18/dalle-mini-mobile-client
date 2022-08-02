@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:dalle_mobile_client/mock_data.dart';
 import 'package:dalle_mobile_client/models/dalle_response.dart';
 import 'package:dalle_mobile_client/repositories/interfaces/saved_images_repository.dart';

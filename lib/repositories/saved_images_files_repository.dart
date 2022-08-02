@@ -1,7 +1,6 @@
 import 'dart:io' as io;
 import 'dart:io';
 import 'package:dalle_mobile_client/models/dalle_image.dart';
-import 'package:dalle_mobile_client/shared/exceptions/dalle_app_exception.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:dalle_mobile_client/repositories/interfaces/saved_images_repository.dart';
 import 'package:path/path.dart';

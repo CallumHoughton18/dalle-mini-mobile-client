@@ -46,7 +46,7 @@ class DalleWebApi implements DalleApi {
           cause: "A SocketException occurred",
           friendlyMessage: "Error: No Internet Connection",
           innerException: e);
-    } on TypeError catch (e) {
+    } on TypeError catch (_) {
       // This exception will occur in the .fromJson method in DalleResponse
       // if parsing the json fails
       // making an assumption here but should

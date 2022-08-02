@@ -2,7 +2,6 @@ import 'package:dalle_mobile_client/repositories/saved_images_files_repository.d
 import 'package:dalle_mobile_client/repositories/saved_screenshots_files_repository.dart';
 import 'package:dalle_mobile_client/screens/generate_images_screen/generate_images_screen.dart';
 import 'package:dalle_mobile_client/screens/previous_generations_screen/previous_generations_screen.dart';
-import 'package:dalle_mobile_client/services/dalle_mock_api.dart';
 import 'package:dalle_mobile_client/services/share_plus_share_service.dart';
 import 'package:dalle_mobile_client/shared/app_constants.dart';
 import 'package:dalle_mobile_client/tiny_service_generator.dart';

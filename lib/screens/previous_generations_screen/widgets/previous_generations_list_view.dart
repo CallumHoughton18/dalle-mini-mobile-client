@@ -40,7 +40,7 @@ class _PreviousGenerationsListViewState
               child: Card(
                 key: Key("${data[index]}-ListViewItem"),
                 child: Padding(
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   child: Row(
                     children: [
                       Expanded(

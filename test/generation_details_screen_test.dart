@@ -1,4 +1,3 @@
-import 'package:dalle_mobile_client/mock_data.dart';
 import 'package:dalle_mobile_client/repositories/interfaces/saved_screenshots_repository.dart';
 import 'package:dalle_mobile_client/screens/generation_details_screen/generation_details_screen.dart';
 import 'package:dalle_mobile_client/services/interfaces/share_service.dart';
@@ -30,7 +29,7 @@ void main() {
       sut = MaterialApp(
           home: GenerationDetailsScreen(
         promptText: "Unit Test",
-        promptResult: TestHelpers.GetMockDalleImageData(),
+        promptResult: TestHelpers.getMockDalleImageData(),
         repository: mockSavedScreenshotsRepo!,
         shareService: mockShareService!,
       ));
@@ -63,7 +62,7 @@ void main() {
       await tester.runAsync(() async {
         // I don't like this, but otherwise the async callback
         // for the ShareButton isn't 'awaited'
-        await tester.tap(find.byKey(Key("dallegriditem-0")));
+        await tester.tap(find.byKey(const Key("dallegriditem-0")));
         await tester.pumpAndSettle();
         expect(find.byType(ImageDialog), findsOneWidget);
       });

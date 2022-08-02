@@ -4,7 +4,7 @@ import 'package:dalle_mobile_client/mock_data.dart';
 import 'package:dalle_mobile_client/models/dalle_image.dart';
 
 class TestHelpers {
-  static List<DalleImage> GetMockDalleImageData() {
+  static List<DalleImage> getMockDalleImageData() {
     var dalleData = <DalleImage>[];
     for (var i = 0; i < 9; i++) {
       dalleData.add(DalleImage(

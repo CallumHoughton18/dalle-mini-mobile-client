@@ -70,7 +70,7 @@ void main() {
         (WidgetTester tester) async {
       var itemToTap = mockGenerations[0];
       when(mockSavedImagesRepository!.getImages(itemToTap))
-          .thenAnswer((_) => Future(() => TestHelpers.GetMockDalleImageData()));
+          .thenAnswer((_) => Future(() => TestHelpers.getMockDalleImageData()));
 
       await tester.pumpWidget(sut!);
       await tester.pumpAndSettle();
