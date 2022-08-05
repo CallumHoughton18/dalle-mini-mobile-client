@@ -40,6 +40,9 @@ class _ShellState extends State<Shell> {
     var scaffold = Scaffold(
       appBar: AppBar(title: const Text("Craiyon")),
       body: PageView(
+          onPageChanged: (index) {
+            WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
+          },
           controller: _pageController,
           physics: const NeverScrollableScrollPhysics(),
           children: pages),

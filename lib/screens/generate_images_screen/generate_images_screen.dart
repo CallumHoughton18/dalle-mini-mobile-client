@@ -99,6 +99,7 @@ class _GeneratedImagesScreenState extends State<GeneratedImagesScreen>
                                         _getAndSaveDallePhotos(context);
                                       }
                                       setState(() {});
+                                      FocusScope.of(context).unfocus();
                                     }),
                                     child: const Icon(Icons.edit)),
                               ),
