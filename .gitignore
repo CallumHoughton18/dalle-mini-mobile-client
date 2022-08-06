@@ -9,6 +9,9 @@
 .history
 .svn/
 
+# keys
+/keys
+
 # vscode
 .vscode/settings.json
 
