@@ -38,7 +38,7 @@ class _ShellState extends State<Shell> {
   @override
   Widget build(BuildContext context) {
     var scaffold = Scaffold(
-      appBar: AppBar(title: const Text("Craiyon")),
+      appBar: AppBar(title: const Text("Craiyola")),
       body: PageView(
           onPageChanged: (index) {
             WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();

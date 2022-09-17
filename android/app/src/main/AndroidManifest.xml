@@ -2,7 +2,7 @@
     package="com.callumhoughton18.dalle_mobile_client">
     <uses-permission android:name="android.permission.INTERNET" /> 
    <application
-        android:label="Craiyon"
+        android:label="Craiyola"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
